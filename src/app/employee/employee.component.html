@@ -1,0 +1,64 @@
+
+<mat-table [dataSource]="dataSource"  matSort matSortActive="name" matSortDirection="asc" >
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="age">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Age </th>
+    <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="project">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header> Project </th>
+  <td mat-cell *matCellDef="let element">
+  <div *ngFor="let project of element.projects"> {{project.name}}</div>
+  </td>
+  </ng-container>
+
+  <ng-container matColumnDef="delete" >
+    <th mat-header-cell *matHeaderCellDef> delete </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button  (click)="deleteEmployeeAndProject(element.id)">Delete</button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="edit" >
+    <th mat-header-cell *matHeaderCellDef> edit </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button  (click)="setValueEmployee(element)">Edit</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</mat-table>
+
+
+
+
+
+
+<div class="example-container">
+  <form [formGroup]="MyFormCreatEmployee">
+    <mat-form-field>
+      <input matInput placeholder="name" type="text" name="name" formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="age" type="number" name="age" formControlName="age">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="select" formControlName="projects" [multiple]="true">
+       <mat-option  *ngFor="let project of projectsInEmployee" [value]="project">{{project.name}} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+  <button (click)="creatEmployee(MyFormCreatEmployee.value)">Создать</button>
+</div>
+
+
+
+
+
